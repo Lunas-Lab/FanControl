@@ -4,6 +4,7 @@
 static const uint8_t pwmPin = 9;         // Pin that goes to fam PWM input (Arduino Uno have a built LED on pin 13)
 static const uint32_t frequency = 22000; // PWM frequency in Hz
 static const uint8_t errorPin = 13;      // Pin to blink if pin PWM frequency is not set successfully
+static const uint8_t adcPin = A0;        // Pin to read potentiometer from
 
 void setup()
 {
@@ -15,12 +16,8 @@ void setup()
   InitTimersSafe();
   bool success = SetPinFrequencySafe(pwmPin, 20000);
 
-  // Check if PWM pin was setup correctly
-  if (success)
-  {
-    pwmWrite(pwmPin, 64);
-  }
-  else // Blink errorPin if it was not
+  // Blink errorPin if pwmPin was not setup successfully
+  if (!success)
   {
     while (true)
     {
@@ -30,8 +27,12 @@ void setup()
       delay(500);
     }
   }
+
+  pinMode(adcPin, INPUT);
 }
 
 void loop()
 {
+  uint8_t adcRead = analogRead(adcPin) >> 2;
+  pwmWrite(pwmPin, adcRead);
 }

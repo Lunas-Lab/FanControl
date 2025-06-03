@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <PWM.h>
 
-static const uint8_t pwmPin = 9;         // Pin that goes to fam PWM input (Arduino Uno have a built LED on pin 13)
+static const uint8_t pwmPin = 9;         // Pin that goes to fan PWM input (Arduino Uno have a built LED on pin 13)
 static const uint32_t frequency = 22000; // PWM frequency in Hz
 static const uint8_t errorPin = 13;      // Pin to blink if pin PWM frequency is not set successfully
 static const uint8_t adcPin = A0;        // Pin to read potentiometer from
@@ -21,9 +21,9 @@ void setup()
   {
     while (true)
     {
-      digitalWrite(10, HIGH);
+      digitalWrite(errorPin, HIGH);
       delay(500);
-      digitalWrite(10, LOW);
+      digitalWrite(errorPin, LOW);
       delay(500);
     }
   }

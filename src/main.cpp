@@ -20,8 +20,8 @@ void setup()
   {
     pwmWrite(pwmPin, 64);
   }
-  else
-  { // Blink errorPin HIGH if it was not
+  else // Blink errorPin if it was not
+  {
     while (true)
     {
       digitalWrite(10, HIGH);

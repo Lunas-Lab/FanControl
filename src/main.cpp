@@ -14,7 +14,7 @@ void setup()
 
   // Setup PWM pin
   InitTimersSafe();
-  bool success = SetPinFrequencySafe(pwmPin, 20000);
+  bool success = SetPinFrequencySafe(pwmPin, frequency);
 
   // Blink errorPin if pwmPin was not setup successfully
   if (!success)
@@ -33,6 +33,8 @@ void setup()
 
 void loop()
 {
+  //Read the potentiometer value wit the ADC
+  //then convert the 10-bit ADC value to 8-bit
   uint8_t adcRead = analogRead(adcPin) >> 2;
   pwmWrite(pwmPin, adcRead);
 }

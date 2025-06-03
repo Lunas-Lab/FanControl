@@ -1,18 +1,29 @@
 #include <Arduino.h>
+#include <PWM.h>
 
-// put function declarations here:
-int myFunction(int, int);
+static const uint8_t pwmPin = 9; //Pin that goes to fam PWM input (Arduino Uno have a built LED on pin 13)
+static const uint32_t frequency = 22000; //PWM frequency in Hz
+static const uint8_t errorPin = 13; // Pin to set HIGH if pin PWM frequency is not set successfully
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  //Setting up error pin 
+  pinMode(errorPin, OUTPUT);
+  digitalWrite(errorPin, LOW);
+
+  //Setup PWM pin
+  InitTimersSafe();
+  bool success = SetPinFrequencySafe(pwmPin, 20000);
+
+  //Check if PWM pin was setup correctly
+  if (success) {
+    pwmWrite(pwmPin, 64);
+  }
+  else { //Set errorPin HIGH if it was not
+
+    digitalWrite(10, HIGH);
+  }
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
 }
